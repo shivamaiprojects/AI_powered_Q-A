@@ -49,6 +49,14 @@ class Settings(BaseSettings):
     dataset_configs: Annotated[list[str], NoDecode] = ["datascience", "ai", "stats"]
     max_documents: int = Field(default=5000, gt=0)
 
+    min_answer_chars: int = Field(default=250, gt=0)
+    max_answer_chars: int = Field(default=6000, gt=0)
+    chunk_size: int = Field(default=1200, gt=0)
+    chunk_overlap: int = Field(default=200, ge=0)
+    min_chunk_chars: int = Field(default=100, gt=0)
+    docs_per_site: int = Field(default=1700, gt=0)
+    random_seed: int = 42
+
     project_root: Path = PROJECT_ROOT
     raw_data_dir: Path = PROJECT_ROOT / "data" / "raw"
     processed_data_dir: Path = PROJECT_ROOT / "data" / "processed"

@@ -123,8 +123,8 @@ Every latency percentile is sub-second. The retrieval/generation split shows ret
 ## Setup
 
 ```
-git clone https://github.com/shivamaiprojects/AI_powered_Q-A.git
-cd AI_powered_Q-A
+git clone https://github.com/shivamaiprojects/rag_faq_assistant
+cd rag_faq_assistant
 
 python -m venv .venv
 .venv\Scripts\Activate.ps1        # Linux/macOS: source .venv/bin/activate

@@ -2,7 +2,7 @@
   "config": {
     "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
     "eval_queries": 498,
-    "threshold": 0.3
+    "threshold": 0.4
   },
   "retrieval": {
     "mrr": 0.5152,
@@ -16,5 +16,16 @@
     "ndcg@10": 0.5566,
     "queries": 498,
     "not_found": 155
+  },
+  "generation": {
+    "n_samples": 10,
+    "refusals": 0,
+    "latency_p50_ms": 271.8,
+    "latency_p95_ms": 531.9,
+    "latency_p99_ms": 676.3,
+    "retrieval_p50_ms": 19.7,
+    "faithfulness_mean": 0.6596,
+    "faithfulness_min": 0.3191,
+    "wall_seconds": 69.9
   }
 }

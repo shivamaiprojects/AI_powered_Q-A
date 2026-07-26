@@ -28,6 +28,7 @@ class Settings(BaseSettings):
     )
 
     hf_token: str = Field(..., description="Hugging Face API token")
+    groq_api_key: str = Field(default="", description="Groq API key (optional)")
 
     llm_model: str = "meta-llama/Llama-3.1-8B-Instruct"
     llm_base_url: str = "https://router.huggingface.co/v1"
@@ -50,6 +51,10 @@ class Settings(BaseSettings):
 
     eval_sample_size: int = Field(default=500, gt=0)
     eval_k_values: Annotated[list[int], NoDecode] = [1, 3, 5, 10]
+
+    reranker_model: str = "cross-encoder/ms-marco-MiniLM-L6-v2"
+    rerank_enabled: bool = False
+    rerank_fetch_k: int = Field(default=20, gt=0)
 
     dataset_name: str = (
         "flax-sentence-embeddings/stackexchange_title_best_voted_answer_jsonl"
@@ -94,6 +99,12 @@ class Settings(BaseSettings):
         if value not in allowed:
             raise ValueError(f"embedding_device must be one of {allowed}")
         return value
+
+    @property
+    def llm_api_key(self) -> str:
+        if "groq.com" in self.llm_base_url:
+            return self.groq_api_key or self.hf_token
+        return self.hf_token
 
 
 settings = Settings()

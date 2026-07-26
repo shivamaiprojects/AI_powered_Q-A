@@ -34,7 +34,15 @@ def main() -> None:
         )
 
     metadata = chunks[
-        ["chunk_id", "doc_id", "chunk_index", "source_site", "question", "chunk_text"]
+        [
+            "chunk_id",
+            "doc_id",
+            "chunk_index",
+            "source_site",
+            "question",
+            "chunk_text",
+            "chunk_clean",
+        ]
     ]
 
     store = VectorStore.build(vectors, metadata)

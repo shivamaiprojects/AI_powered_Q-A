@@ -1,0 +1,22 @@
+{
+  "fetch_k": 20,
+  "queries": 498,
+  "baseline": {
+    "mrr": 0.5201,
+    "hit_rate@1": 0.4398,
+    "hit_rate@3": 0.5643,
+    "hit_rate@5": 0.6225
+  },
+  "reranked": {
+    "mrr": 0.466,
+    "hit_rate@1": 0.3534,
+    "hit_rate@3": 0.5301,
+    "hit_rate@5": 0.5984
+  },
+  "delta": {
+    "mrr": -0.0541,
+    "hit_rate@1": -0.0864,
+    "hit_rate@3": -0.0342,
+    "hit_rate@5": -0.0241
+  }
+}

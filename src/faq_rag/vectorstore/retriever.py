@@ -32,6 +32,7 @@ class Retriever:
         store: VectorStore | None = None,
         embedder: Embedder | None = None,
         score_threshold: float | None = None,
+        reranker=None,
     ) -> None:
         self.store = store or VectorStore.load()
         self.embedder = embedder or Embedder()
@@ -40,6 +41,7 @@ class Retriever:
             if score_threshold is None
             else score_threshold
         )
+        self.reranker = reranker
 
     def retrieve(
         self,
@@ -51,7 +53,7 @@ class Retriever:
         """Return up to k parent documents most relevant to the query."""
         k = k or settings.retrieval_top_k
 
-        fetch_k = k * 4
+        fetch_k = settings.rerank_fetch_k if self.reranker is not None else k * 4
         query_vector = self.embedder.encode_query(query)
         raw_hits = self.store.search(query_vector, k=fetch_k)[0]
 
@@ -60,6 +62,9 @@ class Retriever:
 
         if apply_threshold:
             raw_hits = [h for h in raw_hits if h["score"] >= self.score_threshold]
+
+        if self.reranker is not None and raw_hits:
+            raw_hits = self.reranker.rerank(query, raw_hits, top_k=len(raw_hits))
 
         documents = self._group_by_document(raw_hits)
         return documents[:k]

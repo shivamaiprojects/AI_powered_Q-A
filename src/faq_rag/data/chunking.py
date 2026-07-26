@@ -52,19 +52,29 @@ def chunk_documents(df: pd.DataFrame) -> pd.DataFrame:
     records: list[dict[str, object]] = []
 
     for row in df.itertuples(index=False):
-        pieces = _merge_short_pieces(
+        embed_pieces = _merge_short_pieces(
             splitter.split_text(row.answer_embed), settings.min_chunk_chars
         )
-        for position, piece in enumerate(pieces):
+        clean_pieces = _merge_short_pieces(
+            splitter.split_text(row.answer_clean), settings.min_chunk_chars
+        )
+
+        for position, piece in enumerate(embed_pieces):
+            clean_text = (
+                clean_pieces[position]
+                if position < len(clean_pieces)
+                else row.answer_clean
+            )
             records.append(
                 {
                     "chunk_id": f"{row.doc_id}::{position}",
                     "doc_id": row.doc_id,
                     "chunk_index": position,
-                    "n_chunks": len(pieces),
+                    "n_chunks": len(embed_pieces),
                     "source_site": row.source_site,
                     "question": row.question,
                     "chunk_text": piece,
+                    "chunk_clean": clean_text,
                 }
             )
 

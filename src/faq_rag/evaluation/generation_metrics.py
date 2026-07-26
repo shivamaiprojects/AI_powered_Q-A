@@ -27,6 +27,7 @@ def evaluate_generation(
     n_samples: int = 50,
     chain: RagChain | None = None,
     embedder: Embedder | None = None,
+    delay_seconds: float = 6.0,
 ) -> dict[str, float]:
     """Measure latency percentiles and answer faithfulness on a subsample."""
     chain = chain or RagChain()
@@ -41,18 +42,19 @@ def evaluate_generation(
 
     for question in sample["question"]:
         start = time.perf_counter()
-        response = chain.answer(question)
+        response = chain.answer(question, k=3)
         latencies.append((time.perf_counter() - start) * 1000)
         retrieval_latencies.append(response.retrieval_ms)
 
         if not response.answered:
             refusals += 1
-            continue
+        else:
+            context = "\n\n".join(doc.text for doc in response.sources)
+            faithfulness_scores.append(
+                _faithfulness(response.answer, context, embedder)
+            )
 
-        context = "\n\n".join(doc.text for doc in response.sources)
-        faithfulness_scores.append(
-            _faithfulness(response.answer, context, embedder)
-        )
+        time.sleep(delay_seconds)
 
     latencies_arr = np.array(latencies)
     return {
@@ -62,6 +64,14 @@ def evaluate_generation(
         "latency_p95_ms": round(float(np.percentile(latencies_arr, 95)), 1),
         "latency_p99_ms": round(float(np.percentile(latencies_arr, 99)), 1),
         "retrieval_p50_ms": round(float(np.median(retrieval_latencies)), 1),
-        "faithfulness_mean": round(float(np.mean(faithfulness_scores)), 4),
-        "faithfulness_min": round(float(np.min(faithfulness_scores)), 4),
+        "faithfulness_mean": (
+            round(float(np.mean(faithfulness_scores)), 4)
+            if faithfulness_scores
+            else 0.0
+        ),
+        "faithfulness_min": (
+            round(float(np.min(faithfulness_scores)), 4)
+            if faithfulness_scores
+            else 0.0
+        ),
     }

@@ -30,7 +30,7 @@ class LLMClient:
         self.max_tokens = max_tokens or settings.llm_max_tokens
         self._client = OpenAI(
             base_url=base_url or settings.llm_base_url,
-            api_key=api_key or settings.hf_token,
+            api_key=api_key or settings.llm_api_key,
             timeout=settings.llm_timeout,
         )
 

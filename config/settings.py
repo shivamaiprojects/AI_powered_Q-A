@@ -33,6 +33,7 @@ class Settings(BaseSettings):
     llm_base_url: str = "https://router.huggingface.co/v1"
     llm_temperature: float = Field(default=0.1, ge=0.0, le=2.0)
     llm_max_tokens: int = Field(default=512, gt=0)
+    llm_timeout: float = Field(default=30.0, gt=0)
 
     embedding_model: str = "sentence-transformers/all-MiniLM-L6-v2"
     embedding_device: str = "cuda"
@@ -40,6 +41,7 @@ class Settings(BaseSettings):
 
     retrieval_top_k: int = Field(default=5, gt=0)
     retrieval_score_threshold: float = Field(default=0.4, ge=0.0, le=1.0)
+
 
     dataset_name: str = (
         "flax-sentence-embeddings/stackexchange_title_best_voted_answer_jsonl"

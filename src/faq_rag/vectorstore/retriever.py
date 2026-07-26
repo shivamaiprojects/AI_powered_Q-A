@@ -96,3 +96,7 @@ class Retriever:
                 existing.score = max(existing.score, score)
 
         return sorted(grouped.values(), key=lambda d: d.score, reverse=True)
+
+    def available_sites(self) -> list[str]:
+        """Return the distinct source sites present in the index."""
+        return sorted(self.store.metadata["source_site"].unique().tolist())

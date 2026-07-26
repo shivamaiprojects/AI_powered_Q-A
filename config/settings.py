@@ -42,6 +42,8 @@ class Settings(BaseSettings):
     retrieval_top_k: int = Field(default=5, gt=0)
     retrieval_score_threshold: float = Field(default=0.4, ge=0.0, le=1.0)
 
+    rag_include_sources: bool = True
+
 
     dataset_name: str = (
         "flax-sentence-embeddings/stackexchange_title_best_voted_answer_jsonl"

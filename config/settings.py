@@ -38,12 +38,18 @@ class Settings(BaseSettings):
     embedding_model: str = "sentence-transformers/all-MiniLM-L6-v2"
     embedding_device: str = "cuda"
     embedding_batch_size: int = Field(default=64, gt=0)
+    embedding_query_prefix: str = (
+        "Represent this sentence for searching relevant passages: "
+    )
+    embedding_normalize: bool = True
 
     retrieval_top_k: int = Field(default=5, gt=0)
     retrieval_score_threshold: float = Field(default=0.4, ge=0.0, le=1.0)
 
     rag_include_sources: bool = True
 
+    eval_sample_size: int = Field(default=500, gt=0)
+    eval_k_values: Annotated[list[int], NoDecode] = [1, 3, 5, 10]
 
     dataset_name: str = (
         "flax-sentence-embeddings/stackexchange_title_best_voted_answer_jsonl"
@@ -61,11 +67,6 @@ class Settings(BaseSettings):
     docs_per_site: int = Field(default=1700, gt=0)
     random_seed: int = 42
 
-    embedding_query_prefix: str = (
-        "Represent this sentence for searching relevant passages: "
-    )
-    embedding_normalize: bool = True
-
     project_root: Path = PROJECT_ROOT
     raw_data_dir: Path = PROJECT_ROOT / "data" / "raw"
     processed_data_dir: Path = PROJECT_ROOT / "data" / "processed"
@@ -77,6 +78,13 @@ class Settings(BaseSettings):
     def split_configs(cls, value: str | list[str]) -> list[str]:
         if isinstance(value, str):
             return [item.strip() for item in value.split(",") if item.strip()]
+        return value
+
+    @field_validator("eval_k_values", mode="before")
+    @classmethod
+    def split_k_values(cls, value: str | list[int]) -> list[int]:
+        if isinstance(value, str):
+            return [int(x.strip()) for x in value.split(",") if x.strip()]
         return value
 
     @field_validator("embedding_device")

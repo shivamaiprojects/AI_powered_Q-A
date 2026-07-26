@@ -10,6 +10,15 @@ _DATE_FORMAT = "%H:%M:%S"
 _configured = False
 
 
+NOISY_LOGGERS = (
+    "datasets",
+    "httpcore",
+    "httpx",
+    "huggingface_hub",
+    "sentence_transformers",
+    "urllib3",
+)
+
 def configure_logging(level: int = logging.INFO) -> None:
     """Attach a single stdout handler to the root logger."""
     global _configured
@@ -24,8 +33,8 @@ def configure_logging(level: int = logging.INFO) -> None:
     root.handlers.clear()
     root.addHandler(handler)
 
-    logging.getLogger("datasets").setLevel(logging.WARNING)
-    logging.getLogger("huggingface_hub").setLevel(logging.WARNING)
+    for noisy in NOISY_LOGGERS:
+        logging.getLogger(noisy).setLevel(logging.WARNING)
 
     _configured = True
 

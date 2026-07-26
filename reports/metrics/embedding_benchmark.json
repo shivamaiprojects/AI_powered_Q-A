@@ -1,0 +1,42 @@
+{
+  "bge-small (prefix)": {
+    "dimension": 384.0,
+    "max_seq_length": 512.0,
+    "passages_per_second": 156.1,
+    "query_ms_each": 0.583,
+    "accuracy_at_1": 0.476,
+    "accuracy_at_5": 0.6747,
+    "mrr": 0.568,
+    "matched_similarity": 0.7318
+  },
+  "bge-small (no prefix)": {
+    "dimension": 384.0,
+    "max_seq_length": 512.0,
+    "passages_per_second": 159.0,
+    "query_ms_each": 0.488,
+    "accuracy_at_1": 0.4567,
+    "accuracy_at_5": 0.6507,
+    "mrr": 0.5488,
+    "matched_similarity": 0.74
+  },
+  "bge-base (no prefix)": {
+    "dimension": 768.0,
+    "max_seq_length": 512.0,
+    "passages_per_second": 56.7,
+    "query_ms_each": 1.387,
+    "accuracy_at_1": 0.4687,
+    "accuracy_at_5": 0.6887,
+    "mrr": 0.5693,
+    "matched_similarity": 0.7161
+  },
+  "MiniLM-L6": {
+    "dimension": 384.0,
+    "max_seq_length": 256.0,
+    "passages_per_second": 418.8,
+    "query_ms_each": 0.262,
+    "accuracy_at_1": 0.54,
+    "accuracy_at_5": 0.7567,
+    "mrr": 0.6417,
+    "matched_similarity": 0.4913
+  }
+}

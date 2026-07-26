@@ -1,7 +1,7 @@
 {
   "n_documents": 5100,
-  "n_chunks": 8024,
-  "chunks_per_document": 1.57,
+  "n_chunks": 10014,
+  "chunks_per_document": 1.96,
   "documents_per_site": {
     "datascience": 1700,
     "ai": 1700,
@@ -18,21 +18,21 @@
     "max": 5946.0
   },
   "chunk_chars": {
-    "count": 8024.0,
-    "mean": 752.5,
-    "std": 296.6,
+    "count": 10014.0,
+    "mean": 602.6,
+    "std": 209.5,
     "min": 100.0,
-    "25%": 500.0,
-    "50%": 774.0,
-    "75%": 1022.0,
-    "max": 1323.0
+    "25%": 440.2,
+    "50%": 635.0,
+    "75%": 786.0,
+    "max": 998.0
   },
   "documents_with_code": 337,
   "config": {
     "min_answer_chars": 250,
     "max_answer_chars": 6000,
-    "chunk_size": 1200,
-    "chunk_overlap": 200,
+    "chunk_size": 900,
+    "chunk_overlap": 150,
     "docs_per_site": 1700
   }
 }

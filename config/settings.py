@@ -34,7 +34,7 @@ class Settings(BaseSettings):
     llm_temperature: float = Field(default=0.1, ge=0.0, le=2.0)
     llm_max_tokens: int = Field(default=512, gt=0)
 
-    embedding_model: str = "BAAI/bge-small-en-v1.5"
+    embedding_model: str = "sentence-transformers/all-MiniLM-L6-v2"
     embedding_device: str = "cuda"
     embedding_batch_size: int = Field(default=64, gt=0)
 
@@ -51,11 +51,16 @@ class Settings(BaseSettings):
 
     min_answer_chars: int = Field(default=250, gt=0)
     max_answer_chars: int = Field(default=6000, gt=0)
-    chunk_size: int = Field(default=1200, gt=0)
-    chunk_overlap: int = Field(default=200, ge=0)
+    chunk_size: int = Field(default=900, gt=0)
+    chunk_overlap: int = Field(default=150, ge=0)
     min_chunk_chars: int = Field(default=100, gt=0)
     docs_per_site: int = Field(default=1700, gt=0)
     random_seed: int = 42
+
+    embedding_query_prefix: str = (
+        "Represent this sentence for searching relevant passages: "
+    )
+    embedding_normalize: bool = True
 
     project_root: Path = PROJECT_ROOT
     raw_data_dir: Path = PROJECT_ROOT / "data" / "raw"

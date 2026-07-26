@@ -1,0 +1,20 @@
+{
+  "model": "sentence-transformers/all-MiniLM-L6-v2",
+  "positive": {
+    "p5": 0.1998,
+    "p25": 0.383,
+    "p50": 0.497,
+    "p75": 0.6083,
+    "p95": 0.7415
+  },
+  "negative": {
+    "p5": -0.0892,
+    "p25": -0.01,
+    "p50": 0.0468,
+    "p75": 0.1141,
+    "p95": 0.2362
+  },
+  "positive_mean": 0.4896,
+  "negative_mean": 0.0579,
+  "suggested_threshold": 0.218
+}
